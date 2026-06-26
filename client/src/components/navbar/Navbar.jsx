@@ -161,7 +161,7 @@ function Navbar() {
             {mobileCategories && (
               <div className="pl-4 space-y-2">
 
-                {categories.map((category) => (
+                {CATEGORY_LINKS.map((category) => (
                   <Link
                     key={category}
                     to="/menu"
