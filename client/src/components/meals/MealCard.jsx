@@ -1,8 +1,11 @@
-import { Plus } from "lucide-react";
+import { useState } from "react";
+import { Plus, Check } from "lucide-react";
 import { SITE_SETTINGS } from "../../constants/settings";
 import { getDisplayPrice } from "../../utils/pricing";
 
 function MealCard({ meal, onOpenMeal, onAddToCart }) {
+  const [added, setAdded] = useState(false);
+
   const { originalPrice, currentPrice } = getDisplayPrice(
     meal.price,
     SITE_SETTINGS.promoEnabled,
@@ -11,7 +14,14 @@ function MealCard({ meal, onOpenMeal, onAddToCart }) {
 
   const handleAddToCart = (e) => {
     e.stopPropagation();
+
     onAddToCart(meal);
+
+    setAdded(true);
+
+    setTimeout(() => {
+      setAdded(false);
+    }, 800);
   };
 
   return (
@@ -46,9 +56,13 @@ function MealCard({ meal, onOpenMeal, onAddToCart }) {
 
         <button
           onClick={handleAddToCart}
-          className="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-red-600 text-white flex items-center justify-center"
+          className={`absolute bottom-4 right-4 w-10 h-10 rounded-full text-white flex items-center justify-center transition-all duration-300 active:scale-90 ${
+            added
+              ? "bg-green-600 scale-110"
+              : "bg-red-600 hover:bg-red-700 hover:scale-105"
+          }`}
         >
-          <Plus size={18} />
+          {added ? <Check size={18} /> : <Plus size={18} />}
         </button>
       </div>
     </div>
