@@ -9,26 +9,26 @@ import {
 } from "lucide-react";
 
 import logo from "../../assets/images/brand/tessys-place-logo.png";
-import {
-  NAVIGATION_LINKS,
-  CATEGORY_LINKS,
-} from "../../constants/navigation";
+import { CATEGORY_LINKS } from "../../constants/navigation";
 import { useCart } from "../../context/CartContext";
 
 function Navbar() {
   const [mobileMenu, setMobileMenu] = useState(false);
   const [mobileCategories, setMobileCategories] = useState(false);
+
   const { cartItems } = useCart();
+
   const cartCount = cartItems.reduce(
-  (total, item) => total + item.quantity,
-  0
-);
+    (total, item) => total + item.quantity,
+    0
+  );
 
   return (
     <nav className="bg-white shadow-sm sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 lg:px-6">
-
         <div className="flex items-center justify-between h-20">
+
+          {/* Logo */}
 
           <Link
             to="/"
@@ -51,19 +51,34 @@ function Navbar() {
             </div>
           </Link>
 
+          {/* Desktop Menu */}
+
           <div className="hidden lg:flex items-center gap-8">
 
-            <Link to="/">
+            <Link
+              to="/"
+              className="hover:text-red-600 transition"
+            >
               Home
             </Link>
 
-            <Link to="/menu">
+            <Link
+              to="/about"
+              className="hover:text-red-600 transition"
+            >
+              Our Story
+            </Link>
+
+            <Link
+              to="/menu"
+              className="hover:text-red-600 transition"
+            >
               Menu
             </Link>
 
             <div className="group relative">
 
-              <button className="flex items-center gap-1">
+              <button className="flex items-center gap-1 hover:text-red-600 transition">
                 Categories
                 <ChevronDown size={16} />
               </button>
@@ -83,11 +98,16 @@ function Navbar() {
               </div>
             </div>
 
-            <Link to="/deals">
+            <Link
+              to="/deals"
+              className="hover:text-red-600 transition"
+            >
               Deals
             </Link>
 
           </div>
+
+          {/* Right Side */}
 
           <div className="flex items-center gap-4">
 
@@ -104,16 +124,14 @@ function Navbar() {
 
             <Link
               to="/account"
-              className="hidden md:flex items-center gap-2 bg-red-600 text-white px-5 py-2 rounded-lg"
+              className="hidden md:flex items-center gap-2 bg-red-600 text-white px-5 py-2 rounded-lg hover:bg-red-700 transition"
             >
               <User size={18} />
               Account
             </Link>
 
             <button
-              onClick={() =>
-                setMobileMenu(!mobileMenu)
-              }
+              onClick={() => setMobileMenu(!mobileMenu)}
               className="lg:hidden"
             >
               {mobileMenu ? (
@@ -127,6 +145,8 @@ function Navbar() {
         </div>
       </div>
 
+      {/* Mobile Menu */}
+
       {mobileMenu && (
         <div className="lg:hidden border-t bg-white">
 
@@ -135,27 +155,41 @@ function Navbar() {
             <Link
               to="/"
               className="block"
+              onClick={() => setMobileMenu(false)}
             >
               Home
             </Link>
 
             <Link
+              to="/about"
+              className="block"
+              onClick={() => setMobileMenu(false)}
+            >
+              Our Story
+            </Link>
+
+            <Link
               to="/menu"
               className="block"
+              onClick={() => setMobileMenu(false)}
             >
               Menu
             </Link>
 
             <button
               onClick={() =>
-                setMobileCategories(
-                  !mobileCategories
-                )
+                setMobileCategories(!mobileCategories)
               }
               className="flex items-center justify-between w-full"
             >
               Categories
-              <ChevronDown size={18} />
+
+              <ChevronDown
+                size={18}
+                className={`transition-transform ${
+                  mobileCategories ? "rotate-180" : ""
+                }`}
+              />
             </button>
 
             {mobileCategories && (
@@ -165,7 +199,8 @@ function Navbar() {
                   <Link
                     key={category}
                     to="/menu"
-                    className="block text-gray-600"
+                    className="block text-gray-600 hover:text-red-600"
+                    onClick={() => setMobileMenu(false)}
                   >
                     {category}
                   </Link>
@@ -177,6 +212,7 @@ function Navbar() {
             <Link
               to="/deals"
               className="block"
+              onClick={() => setMobileMenu(false)}
             >
               Deals
             </Link>
@@ -184,6 +220,7 @@ function Navbar() {
             <Link
               to="/account"
               className="block"
+              onClick={() => setMobileMenu(false)}
             >
               Account
             </Link>

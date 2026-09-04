@@ -4,6 +4,10 @@ export const NAVIGATION_LINKS = [
     path: "/",
   },
   {
+    name: "About",
+    path: "/about",
+  },
+  {
     name: "Menu",
     path: "/menu",
   },
